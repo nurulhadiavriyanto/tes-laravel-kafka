@@ -2,8 +2,10 @@
 
 namespace App\Services;
 
+use App\Exceptions\ServerErrorException;
 use Spatie\QueryBuilder\QueryBuilder;
 use App\Models\Club;
+use Exception;
 
 class ClubServices
 {
@@ -26,21 +28,24 @@ class ClubServices
         ], 200);
     }
 
-    // public function create($request)
-    // {
-    //     //cek authorization
-    //     $this->cekSession();
+    public function create($request)
+    {
+        try {
+            $club = new Club;
+            $club->fill($request->all());
+            $club->save();
+            
+            $data = $club->toArray();
 
-    //     try {
-    //         $klien = new Klien;
-    //         $klien->fill($request->all());
-    //         $klien->account_officer_id = $this->auth->id;
-    //         $klien->save();
-    //         return responseJson('success', 'Berhasil menambah data', $klien, 200);
-    //     } catch (Exception $e) {
-    //         throw new ServerErrorException($e->getMessage(),$e);
-    //     }
-    // }
+            return response()->json([
+                'status' => 'success',
+                'message' => 'Berhasil mendapatkan data',
+                'data' => $data,
+            ], 200);
+        } catch (Exception $e) {
+            throw new ServerErrorException($e->getMessage(),$e);
+        }
+    }
 
     // public function update($request)
     // {

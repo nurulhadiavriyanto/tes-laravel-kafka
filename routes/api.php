@@ -16,10 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::prefix('club')->name('club')->group(function () {
     Route::get('/', [ClubController::class, 'get'])->name('get');
+    Route::post('/', [ClubController::class, 'create'])->name('create');
 });
-// , function ($router) {
-//     $router->get('/get', 'Api\ClubController@get');
-    // $router->post('/create', 'api\v1\KlienController@create');
-    // $router->post('/update', 'api\v1\KlienController@update');
-    // $router->post('/delete', 'api\v1\KlienController@delete');
-// });
